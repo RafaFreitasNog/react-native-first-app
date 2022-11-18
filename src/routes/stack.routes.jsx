@@ -2,16 +2,16 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ScreenPokeList } from "../pages/ScreenPokeList";
 import { ScreenPokemon } from "../pages/ScreenPokemon";
 
-const { Screen, Navigator } = createNativeStackNavigator()
+const HomeStack = createNativeStackNavigator()
 
-export function StackRoutes() {
+export function HomeStackRoutes() {
   return (
-    <Navigator>
-      <Screen name='Menu' component={ScreenPokeList} 
+    <HomeStack.Navigator>
+      <HomeStack.Screen name='PokemonList' component={ScreenPokeList} 
       options={{
         headerShown: false,
       }}/>
-      <Screen name='Pokemon' component={ScreenPokemon} />
-    </Navigator>
+      <HomeStack.Screen name='Pokemon' component={ScreenPokemon} />
+    </HomeStack.Navigator>
   )
 }
