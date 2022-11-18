@@ -60,11 +60,15 @@ export default function App() {
       </View>
       <View style={styles.buttonsConteiner}>
         <Pressable style={styles.button}
-        onPress={handlePrevButtonClick}>
+        onPress={handlePrevButtonClick}
+        pressRetentionOffset={30}
+        hitSlop={10}>
           <Text style={styles.buttonText}>prev</Text>
         </Pressable>
         <Pressable style={styles.button}
-        onPress={handleNextButtonClick}>
+        onPress={handleNextButtonClick}
+        pressRetentionOffset={30}
+        hitSlop={10}>
           <Text style={styles.buttonText}>next</Text>
         </Pressable>
       </View>
