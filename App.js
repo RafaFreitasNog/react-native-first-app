@@ -5,8 +5,8 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 export default function App() {
   
   const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon?limit=10&offset=0")
-  const [nextUrl, setNextUrl] = useState('')
-  const [prevUrl, setPrevUrl] = useState('')
+  const [nextUrl, setNextUrl] = useState()
+  const [prevUrl, setPrevUrl] = useState()
   const [pokemonArray, setPokemonArray] = useState([])
 
   function handlePrevButtonClick() {
@@ -26,13 +26,9 @@ export default function App() {
       try {        
         const response = await fetch(url)
         const responseJson = await response.json()
-        setPokemonArray(responseJson.results);
-        if (responseJson.next) {
-          setNextUrl(responseJson.next)
-        }
-        if (responseJson.previous) {
-          setPrevUrl(responseJson.previous)
-        }
+        setPokemonArray(responseJson.results)
+        setNextUrl(responseJson.next)
+        setPrevUrl(responseJson.previous)
       } catch (error) {
         console.log(error);
       }
@@ -59,16 +55,18 @@ export default function App() {
         </ScrollView>
       </View>
       <View style={styles.buttonsConteiner}>
-        <Pressable style={styles.button}
+        <Pressable style={[styles.button, (!prevUrl) && styles.disabled]}
         onPress={handlePrevButtonClick}
         pressRetentionOffset={30}
-        hitSlop={10}>
+        hitSlop={10}
+        disabled={(prevUrl) ? false : true}>
           <Text style={styles.buttonText}>prev</Text>
         </Pressable>
-        <Pressable style={styles.button}
+        <Pressable style={[styles.button, (!nextUrl) && styles.disabled]}
         onPress={handleNextButtonClick}
         pressRetentionOffset={30}
-        hitSlop={10}>
+        hitSlop={10}
+        disabled={(nextUrl) ? false : true}>
           <Text style={styles.buttonText}>next</Text>
         </Pressable>
       </View>
@@ -134,5 +132,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  disabled: {
+    opacity: 0.4,
   },
 });
