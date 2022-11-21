@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export function ScreenPokeList({ navigation }) {
 
@@ -47,41 +47,43 @@ function handlePokemonPress(url) {
   return (
     <>
     <StatusBar style="auto" />
-    <View style={styles.pageConteiner}>  
-      <View style={styles.titleContainer}>
-        <Text style={styles.listTitle}>Lista de Pokémons</Text>
-      </View>
-      <View style={styles.cardsConteiner}>
-        <ScrollView>
-          {pokemonArray.map((pokemon) => 
-          <Pressable 
-          onPress={() => {handlePokemonPress(pokemon.url)}}
-          key={pokemon.name}
-          >
-            <PokemonCard
-            name={pokemon.name}
-            />
+    <SafeAreaView style={styles.safeAreaView}>  
+      <View style={styles.pageConteiner}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.listTitle}>Lista de Pokémons</Text>
+        </View>
+        <View style={styles.cardsConteiner}>
+          <ScrollView>
+            {pokemonArray.map((pokemon) => 
+            <Pressable 
+            onPress={() => {handlePokemonPress(pokemon.url)}}
+            key={pokemon.name}
+            >
+              <PokemonCard
+              name={pokemon.name}
+              />
+            </Pressable>
+            )}
+          </ScrollView>
+        </View>
+        <View style={styles.buttonsConteiner}>
+          <Pressable style={[styles.button, (!prevUrl) && styles.disabled]}
+          onPress={handlePrevButtonClick}
+          pressRetentionOffset={30}
+          hitSlop={10}
+          disabled={(prevUrl) ? false : true}>
+            <Text style={styles.buttonText}>prev</Text>
           </Pressable>
-          )}
-        </ScrollView>
+          <Pressable style={[styles.button, (!nextUrl) && styles.disabled]}
+          onPress={handleNextButtonClick}
+          pressRetentionOffset={30}
+          hitSlop={10}
+          disabled={(nextUrl) ? false : true}>
+            <Text style={styles.buttonText}>next</Text>
+          </Pressable>
+        </View>
       </View>
-      <View style={styles.buttonsConteiner}>
-        <Pressable style={[styles.button, (!prevUrl) && styles.disabled]}
-        onPress={handlePrevButtonClick}
-        pressRetentionOffset={30}
-        hitSlop={10}
-        disabled={(prevUrl) ? false : true}>
-          <Text style={styles.buttonText}>prev</Text>
-        </Pressable>
-        <Pressable style={[styles.button, (!nextUrl) && styles.disabled]}
-        onPress={handleNextButtonClick}
-        pressRetentionOffset={30}
-        hitSlop={10}
-        disabled={(nextUrl) ? false : true}>
-          <Text style={styles.buttonText}>next</Text>
-        </Pressable>
-      </View>
-    </View>
+    </SafeAreaView>
     </>
   );
 }
@@ -95,9 +97,11 @@ function PokemonCard(props) {
 };
 
 const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+  }, 
   pageConteiner: {
     flex: 1,
-    marginTop: 50,
     paddingHorizontal: 40,
     justifyContent: 'center',
   },
@@ -137,7 +141,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#219ebc",
     paddingHorizontal: 40,
     paddingVertical: 12,
-    borderRadius: 4,
+    borderRadius: 6,
   },
   buttonText: {
     color: '#fff',

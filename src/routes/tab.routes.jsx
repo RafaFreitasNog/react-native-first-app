@@ -12,6 +12,7 @@ export function TabRoutes() {
       title: 'Menu',
     }}/>
       <Tab.Screen name="Search" component={ScreenSearch} options={{
+        headerShown: false,
         title: 'Search',
       }} />
     </Tab.Navigator>
