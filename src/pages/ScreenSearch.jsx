@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Keyboard, SafeAreaView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 
 export function ScreenSearch() {
 
@@ -11,17 +11,22 @@ export function ScreenSearch() {
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <View style={styles.searchbarConteiner}>
-        <TextInput
-        style={styles.searchInput}
-        placeholder='Buscar por Pokémons'
-        value={searchText}
-        onChangeText={(value) => {handleSearchTextChange(value)}}>
-        </TextInput>
-      </View>
-      <View style={styles.pageContent}>
-        <Text style={styles.pageCenterText}>Procure por um Pokémon!</Text>
-      </View>
+        <View style={styles.searchbarConteiner}>
+          <TextInput
+          style={styles.searchInput}
+          placeholder='Buscar por Pokémons'
+          placeholderTextColor= '#adb5bd'
+          value={searchText}
+          returnKeyType='search'
+          onChangeText={(value) => {handleSearchTextChange(value)}}
+          >
+          </TextInput>
+        </View>
+      <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
+        <View style={styles.pageContent}>
+          <Text style={styles.pageCenterText}>Procure por um Pokémon!</Text>
+        </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }
