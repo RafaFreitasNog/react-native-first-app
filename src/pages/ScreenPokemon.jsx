@@ -12,7 +12,6 @@ export function ScreenPokemon({ route, navigation }) {
     async function fetchData() {
       const response = await fetch(`${pokemonUrl}`)
       const responseJson = await response.json()
-      console.log(responseJson);
       setName(responseJson.name)
       setWeight(responseJson.weight)
       setHeight(responseJson.height)

@@ -99,6 +99,7 @@ function PokemonCard(props) {
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
+    backgroundColor: '#FAFAFA',
   }, 
   pageConteiner: {
     flex: 1,
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   buttonText: {
-    color: '#fff',
+    color: '#FAFAFA',
     fontSize: 16,
     fontWeight: 'bold',
   },

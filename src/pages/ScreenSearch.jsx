@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Keyboard, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
+import { Keyboard, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
+import { SearchResultCard } from '../components/searchResultCard';
 
 export function ScreenSearch() {
 
@@ -27,9 +29,10 @@ export function ScreenSearch() {
     if (text == '') {
       return
     }
+    const treatedText = text.toLowerCase()
     setFetching(true)
     try {
-      const response = await fetch(`${url}${text}`)
+      const response = await fetch(`${url}${treatedText}`)
       if (response.status == 404) {
         setNoResultMessage(true)
         setResultMessage(false)
@@ -52,74 +55,74 @@ export function ScreenSearch() {
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
-        <View style={styles.searchbarConteiner}>
-          <TextInput
+      <View style={styles.searchbarConteiner}>
+        <TextInput
           style={styles.searchInput}
           placeholder='Buscar por Pokémons'
-          placeholderTextColor= '#adb5bd'
+          placeholderTextColor='#adb5bd'
           value={searchText}
           returnKeyType='search'
-          onChangeText={(value) => {handleSearchTextChange(value)}}
-          onSubmitEditing={(event) => {handleSearchSubmit(event.nativeEvent.text)}}
-          >
-          </TextInput>
-        </View>
-      <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
-        <View style={styles.pageContent}>
+          onChangeText={(value) => { handleSearchTextChange(value) }}
+          onSubmitEditing={(event) => { handleSearchSubmit(event.nativeEvent.text) }}
+        >
+        </TextInput>
+      </View>
+      <ScrollView style={styles.pageContent}
+      keyboardDismissMode='on-drag'>
 
-          {fetching && 
+        {fetching &&
           <View style={styles.centerMessageConteiner}>
             <Text style={styles.pageCenterText} >Loading...</Text>
           </View>}
 
-          {(!fetching && noResultMessage) && 
+        {(!fetching && noResultMessage) &&
           <View style={styles.centerMessageConteiner}>
             <Text style={styles.notFoundEmoticon}>: /</Text>
             <Text style={styles.pageCenterText}>No results found</Text>
           </View>}
 
-          {(!fetching && defaultMessage) && 
+        {(!fetching && defaultMessage) &&
           <View style={styles.centerMessageConteiner}>
-            <Text style={styles.notFoundEmoticon}>nice</Text>
+            <Ionicons name='search' style={styles.notFoundEmoticon} />
             <Text style={styles.pageCenterText}>Procure por um Pokémon!</Text>
           </View>}
 
-          {(!fetching && resultMessage) && 
-          <Pressable>
-            <Text>
-              {searchedPokemon.name}
-            </Text>
-          </Pressable>}
+        {(!fetching && resultMessage) &&
+        <>
+         <SearchResultCard />
+         <SearchResultCard />
+         <SearchResultCard />
+        </>
+         }
 
-        </View>
-      </TouchableWithoutFeedback>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safeAreaView: {
-    backgroundColor: '#fff',
-    flex: 1
+    flex: 1,
+    backgroundColor: '#FAFAFA',
   },
   searchbarConteiner: {
     height: 72,
-    backgroundColor: '#fff',
+    backgroundColor: '#FAFAFA',
     justifyContent: 'center',
     alignItems: 'center',
   },
   searchInput: {
     height: 48,
     width: '92%',
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#F5F5F5',
     color: '#adb5bd',
     paddingLeft: 24,
     borderRadius: 6,
   }, 
   pageContent: {
-    flex: 1,
-    backgroundColor: '#f8f9fa',
-    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    backgroundColor: '#iii',
   },
   pageCenterText: {
     color: '#adb5bd',

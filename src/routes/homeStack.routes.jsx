@@ -7,7 +7,7 @@ const HomeStack = createNativeStackNavigator()
 export function HomeStackRoutes() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name='PokemonList' component={ScreenPokeList} 
+      <HomeStack.Screen name='Home' component={ScreenPokeList} 
       options={{
         headerShown: false,
       }}/>

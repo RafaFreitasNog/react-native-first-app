@@ -1,7 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ScreenSearch } from "../pages/ScreenSearch";
-import { HomeStackRoutes } from "./stack.routes";
+import { HomeStackRoutes } from "./homeStack.routes";
 import { Ionicons } from '@expo/vector-icons';
+import SearchStackRoutes from "./searchStack.routes";
 
 const Tab = createBottomTabNavigator()
 
@@ -10,9 +11,10 @@ export function TabRoutes() {
     <Tab.Navigator 
     screenOptions={{
       tabBarActiveTintColor: '#fb8500',
+      tabBarStyle: {backgroundColor: '#FAFAFA'}
     }}
     >
-      <Tab.Screen name="Home" component={HomeStackRoutes} 
+      <Tab.Screen name="TabHome" component={HomeStackRoutes} 
       options={{
         headerShown: false,
         title: 'Home',
@@ -20,7 +22,7 @@ export function TabRoutes() {
           <Ionicons name="home" size={size} color={color} />
         ),
       }}/>
-      <Tab.Screen name="Search" component={ScreenSearch} 
+      <Tab.Screen name="TabSearch" component={SearchStackRoutes} 
       options={{
         headerShown: false,
         title: 'Search',
