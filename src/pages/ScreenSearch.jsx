@@ -3,7 +3,7 @@ import { Keyboard, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextIn
 import { Ionicons } from "@expo/vector-icons";
 import { SearchResultCard } from '../components/searchResultCard';
 
-export function ScreenSearch() {
+export function ScreenSearch({ navigation }) {
 
   const url = 'https://pokeapi.co/api/v2/pokemon/'
 
@@ -41,6 +41,7 @@ export function ScreenSearch() {
         const responsePokemon = {
           name: json.name,
           image: json.sprites.front_default,
+          url: `${url}${treatedText}`,
         }
         setSearchedPokemon(responsePokemon)
         setResultMessage(true)
@@ -51,6 +52,12 @@ export function ScreenSearch() {
     }
     setDefaultMessage(false)
     setFetching(false)
+  }
+
+  function handlePokemonPress(url) {
+    navigation.navigate('Pokemon', {
+      pokemonUrl: url,
+    })
   }
 
   return (
@@ -89,9 +96,13 @@ export function ScreenSearch() {
 
         {(!fetching && resultMessage) &&
         <>
-         <SearchResultCard />
-         <SearchResultCard />
-         <SearchResultCard />
+        <Pressable 
+        onPress={() => {handlePokemonPress(searchedPokemon.url)}}>
+          <SearchResultCard 
+          name={searchedPokemon.name}
+          imageUrl={searchedPokemon.image}
+          />
+        </Pressable>
         </>
          }
 
